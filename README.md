@@ -28,7 +28,7 @@ $ iex -S mix
 $
 ```
 
-This should start-up the Elixir shell as below. Assuming **Q2** p:
+This should start-up the Elixir shell as below. Assuming queue **Q2**:
 
 ```
 Erlang/OTP 21 [erts-10.1] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-threads:1] [hipe]
