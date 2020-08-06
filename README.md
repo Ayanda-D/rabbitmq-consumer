@@ -14,22 +14,33 @@ Download and extract a `rabbitmq_consumer` installation package and use/execute 
 $ export RABBITMQ_CONSUMER_HOST=127.0.0.1
 $ export RABBITMQ_CONSUMER_PORT=5672
 $ export RABBITMQ_CONSUMER_VHOST=/
-$ export RABBITMQ_CONSUMER_USERNAME=admin
-$ export RABBITMQ_CONSUMER_PASSWORD=admin
-$ export RABBITMQ_CONSUMER_QUEUE=Q2
+$ export RABBITMQ_CONSUMER_USERNAME=guest
+$ export RABBITMQ_CONSUMER_PASSWORD=guest
 $
-$ ./bin/rabbitmq_consumer daemon
 $ ./bin/rabbitmq_consumer remote
+```
+
+Or, install [Elixir](https://elixir-lang.org/install.html), set the environment variables as above, then clone and build the repository as follows:
+
+```
+$ mix deps.get
+$ iex -S mix
+$
+```
+
+This should start-up the Elixir shell as below. Assuming **Q2** p:
+
+```
 Erlang/OTP 21 [erts-10.1] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-threads:1] [hipe]
 
 Interactive Elixir (1.9.0) - press Ctrl+C to exit (type h() ENTER for help)
-iex(rabbitmq_consumer@ayandas-mac)1> Rabbit.Consumer.consume 455
+iex(rabbitmq_consumer@ayandas-mac)1> Rabbit.Consumer.consume "Q2", 455
 :ok
-iex(rabbitmq_consumer@ayandas-mac)2> Rabbit.Consumer.consume 95
+iex(rabbitmq_consumer@ayandas-mac)2> Rabbit.Consumer.consume "Q2", 95
 :ok
 iex(rabbitmq_consumer@ayandas-mac)3> Rabbit.Consumer.stop
 :ok
-iex(rabbitmq_consumer@ayandas-mac)4> Rabbit.Consumer.consume 112
+iex(rabbitmq_consumer@ayandas-mac)4> Rabbit.Consumer.consume "Q2", 112
 :ok
 iex(rabbitmq_consumer@ayandas-mac)5>
 
@@ -77,9 +88,8 @@ config :rabbitmq_consumer, :config,
   host: "localhost",
   port: 5672,
   virtual_host: "/",
-  username: "admin",
-  password: "admin",
-  queue: "TEST-QUEUE-1"
+  username: "guest",
+  password: "guest"
 ```
 
 Or, it may be configured as host environment variables as follows:
@@ -88,9 +98,8 @@ Or, it may be configured as host environment variables as follows:
 $ export RABBITMQ_CONSUMER_HOST=127.0.0.1
 $ export RABBITMQ_CONSUMER_PORT=5672
 $ export RABBITMQ_CONSUMER_VHOST=/
-$ export RABBITMQ_CONSUMER_USERNAME=admin
-$ export RABBITMQ_CONSUMER_PASSWORD=admin
-$ export RABBITMQ_CONSUMER_QUEUE=Q2
+$ export RABBITMQ_CONSUMER_USERNAME=guest
+$ export RABBITMQ_CONSUMER_PASSWORD=guest
 ```
 
 **NOTE:** WThe active hook to use may also be configured as an environment variable, `RABBITMQ_CONSUMER_HOOK`, however, with caution to **always** postfix the hook name with the term `Elixir.`. For example, configuring the `Rabbit.Consumer.Dummy.Hook` as an environment variable would be carried out as follows:
@@ -104,6 +113,18 @@ Each hook is an implementaion of the `Rabbit.Consumer.Hook.Behaviour` pattern.
 
 ## Installation
 
+Github:
+
+```elixir
+def deps do
+  [
+    {:rabbitmq_consumer, github: "Ayanda-D/rabbitmq-consumer"}
+  ]
+end
+```
+
+Hex (currently not available):
+
 
 ```elixir
 def deps do
@@ -112,5 +133,3 @@ def deps do
   ]
 end
 ```
-
-
